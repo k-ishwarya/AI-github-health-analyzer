@@ -42,7 +42,12 @@ async def analyze_repository(request: AnalyzeRequest):
 
 @router.get("/analyze", response_model=AnalyzeResponse)
 async def analyze_repository_get(
-    repo_url: str = Query("https://github.com/fastapi/fastapi", description="GitHub URL or owner/repo")
+    repo_url: str = Query(
+        "https://github.com/fastapi/fastapi",
+        min_length=1,
+        max_length=500,
+        description="GitHub URL or owner/repo"
+    )
 ):
     """Analyze a GitHub repository via GET query param."""
     return await _process_analysis(repo_url)

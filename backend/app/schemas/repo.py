@@ -2,7 +2,12 @@ from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field
 
 class AnalyzeRequest(BaseModel):
-    repo_url: str = Field(..., description="GitHub repository URL or slug, e.g. 'owner/repo' or 'https://github.com/owner/repo'")
+    repo_url: str = Field(
+        ...,
+        min_length=1,
+        max_length=500,
+        description="GitHub repository URL or slug, e.g. 'owner/repo' or 'https://github.com/owner/repo'"
+    )
 
 class CategoryScore(BaseModel):
     score: int

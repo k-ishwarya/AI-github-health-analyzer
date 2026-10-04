@@ -10,6 +10,21 @@ const QUICK_SAMPLES = [
   'facebook/react'
 ]
 
+// Secure URL sanitizer: prevents javascript: / data: pseudo-protocol XSS injections
+const sanitizeExternalUrl = (url) => {
+  if (!url || typeof url !== 'string') return '#'
+  const trimmed = url.trim()
+  try {
+    const parsed = new URL(trimmed)
+    if (parsed.protocol === 'http:' || parsed.protocol === 'https:') {
+      return trimmed
+    }
+  } catch {
+    // Malformed URL, fallback safely
+  }
+  return '#'
+}
+
 function App() {
   const [repoUrl, setRepoUrl] = useState('')
   const [loading, setLoading] = useState(false)
@@ -20,6 +35,11 @@ function App() {
   const handleAnalyze = async (targetRepo) => {
     const url = targetRepo || repoUrl
     if (!url || !url.trim()) return
+
+    if (url.trim().length > 500) {
+      setError('Repository input is too long (maximum 500 characters).')
+      return
+    }
 
     setLoading(true)
     setError(null)
@@ -115,6 +135,9 @@ function App() {
               value={repoUrl}
               onChange={(e) => setRepoUrl(e.target.value)}
               disabled={loading}
+              maxLength={256}
+              autoComplete="off"
+              spellCheck="false"
             />
             <button type="submit" className="analyze-button" disabled={loading}>
               {loading ? 'Analyzing...' : 'Analyze Health'}
@@ -195,9 +218,9 @@ function App() {
             <div className="repo-main-info">
               <div className="repo-title-row">
                 <a
-                  href={data.repository.html_url}
+                  href={sanitizeExternalUrl(data.repository.html_url)}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   className="repo-link"
                 >
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
