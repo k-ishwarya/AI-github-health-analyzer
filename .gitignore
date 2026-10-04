@@ -1,0 +1,77 @@
+# Dependencies
+node_modules/
+**/node_modules/
+.pnp
+.pnp.js
+
+# Production Builds & Output
+dist/
+**/dist/
+dist-ssr/
+build/
+*.egg-info/
+.eggs/
+
+# Environment Variables & Secrets (Keep your API keys safe)
+.env
+.env.*
+*.env
+backend/.env*
+frontend/.env*
+# Keep example templates committed
+!.env.example
+!backend/.env.example
+!frontend/.env.example
+
+# Python Caches & Bytecode
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+# Python Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Testing & Lint Caches
+.pytest_cache/
+.coverage
+htmlcov/
+.oxlint-cache/
+
+# Databases & Local Storage
+*.sqlite3
+*.sqlite
+*.db
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# IDE & Editor configurations
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+
+# OS Generated Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
